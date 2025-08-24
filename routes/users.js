@@ -5,7 +5,7 @@
 const router = require('express').Router();
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
-const { verifyToken } = require('../verifytoken');
+const { verifyToken } = require('../verifyToken');
 const { upload } = require('../cloudinary');
 
 // GET ALL USERS (No change here)
