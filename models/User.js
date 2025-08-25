@@ -10,6 +10,7 @@ const UserSchema = new mongoose.Schema({
     gender: { type: String, required: true },
     bio: { type: String, required: true, maxLength: 150 },
     profilePic: { type: String, default: '' },
+    pushSubscription: { type: Object }, // <-- ADD THIS LINE
 }, { timestamps: true }); // timestamps adds 'createdAt' and 'updatedAt' fields
 
 module.exports = mongoose.model('User', UserSchema);

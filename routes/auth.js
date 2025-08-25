@@ -44,6 +44,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 // --- FIX ---: We now import the pre-configured 'upload' middleware
 const { upload } = require('../cloudinary'); 
+const { verifyToken } = require('../verifyToken'); 
 
 // REGISTER with profile picture upload
 // The 'upload.single('profilePic')' part is the middleware that handles the file
@@ -99,6 +100,22 @@ router.post('/login', async (req, res) => {
         res.status(500).json(err);
     }
 });
+// --- NEW ---: VERIFY TOKEN ROUTE
+// to keep the users logged in
+router.get("/verify", verifyToken, async (req, res) => {
+    try {
+        // The verifyToken middleware already checks the token.
+        // If it's valid, req.user is populated with the user's id.
+        const user = await User.findById(req.user.id);
+        if (!user) return res.status(404).json("User not found.");
+
+        const { password, ...otherDetails } = user._doc;
+        res.status(200).json(otherDetails);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
 
 module.exports = router;
 // const router = require('express').Router();
