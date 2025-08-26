@@ -46,12 +46,18 @@
     const conversationRoute = require('./routes/conversations');
     const messageRoute = require('./routes/messages');
     const subscriptionRoute = require('./routes/subscriptions');
+    //new line
+    const connectionRoute = require('./routes/connections'); // <-- ADD THIS
+    const notificationRoute = require('./routes/notifications'); // <-- ADD THIS
 
     app.use('/api/auth', authRoute);
     app.use('/api/users', userRoute);
     app.use('/api/conversations', conversationRoute);
     app.use('/api/messages', messageRoute);
     app.use('/api/subscriptions', subscriptionRoute);
+    //new line
+    app.use('/api/connections', connectionRoute); // <-- ADD THIS
+    app.use('/api/notifications', notificationRoute); // <-- ADD THIS
 
     let onlineUsers = [];
     const addUser = (userId, socketId) => { !onlineUsers.some((user) => user.userId === userId) && onlineUsers.push({ userId, socketId }); };
@@ -97,6 +103,105 @@
     server.listen(PORT, () => {
         console.log(`🚀 Backend server is running on port ${PORT}`);
     });
+
+    //  const express = require('express');
+    // const mongoose = require('mongoose');
+    // const dotenv = require('dotenv');
+    // const cors = require('cors');
+    // const http = require('http');
+    // const { Server } = require("socket.io");
+    // const webpush = require('web-push');
+    // const User = require('./models/User');
+
+    // dotenv.config();
+    // const app = express();
+    // const server = http.createServer(app);
+
+    // const allowedOrigins = [ "http://localhost:3000", process.env.FRONTEND_URL ];
+    // const io = new Server(server, {
+    //     cors: {
+    //         origin: function (origin, callback) {
+    //             if (!origin) return callback(null, true);
+    //             if (allowedOrigins.indexOf(origin) === -1) {
+    //                 return callback(new Error('CORS policy violation'), false);
+    //             }
+    //             return callback(null, true);
+    //         },
+    //         methods: ["GET", "POST"]
+    //     }
+    // });
+
+    // webpush.setVapidDetails(
+    //   process.env.VAPID_SUBJECT,
+    //   process.env.VAPID_PUBLIC_KEY,
+    //   process.env.VAPID_PRIVATE_KEY
+    // );
+
+    // mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true, })
+    // .then(() => console.log("✅ MongoDB connection successful!"))
+    // .catch((err) => console.error("❌ MongoDB connection error:", err));
+
+    // app.use(cors());
+    // app.use(express.json());
+
+    // const authRoute = require('./routes/auth');
+    // const userRoute = require('./routes/users');
+    // const conversationRoute = require('./routes/conversations');
+    // const messageRoute = require('./routes/messages');
+    // const subscriptionRoute = require('./routes/subscriptions');
+
+
+    // app.use('/api/auth', authRoute);
+    // app.use('/api/users', userRoute);
+    // app.use('/api/conversations', conversationRoute);
+    // app.use('/api/messages', messageRoute);
+    // app.use('/api/subscriptions', subscriptionRoute);
+
+
+    // let onlineUsers = [];
+    // const addUser = (userId, socketId) => { !onlineUsers.some((user) => user.userId === userId) && onlineUsers.push({ userId, socketId }); };
+    // const removeUser = (socketId) => { onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId); };
+    // const getUser = (userId) => { return onlineUsers.find((user) => user.userId === userId); };
+
+    // io.on("connection", (socket) => {
+    //     socket.on("addUser", (userId) => {
+    //         addUser(userId, socket.id);
+    //     });
+
+    //     socket.on("sendMessage", async ({ senderId, receiverId, text, conversationId }) => {
+    //         const user = getUser(receiverId);
+    //         if (user) {
+    //             io.to(user.socketId).emit("getMessage", { senderId, text, conversationId });
+    //         }
+    //         try {
+    //             const receiver = await User.findById(receiverId);
+    //             if (receiver && receiver.pushSubscription) {
+    //                 const sender = await User.findById(senderId);
+    //                 const payload = JSON.stringify({
+    //                     title: `New message from ${sender.name}`,
+    //                     body: text,
+    //                 });
+    //                 webpush.sendNotification(receiver.pushSubscription, payload)
+    //                     .catch(err => console.error("Error sending notification:", err));
+    //             }
+    //         } catch (error) {
+    //             console.error("Error fetching user for push notification:", error);
+    //         }
+    //     });
+
+    //     socket.on("disconnect", () => {
+    //         removeUser(socket.id);
+    //     });
+    // });
+
+    // app.get("/api/wakeup", (req, res) => {
+    //     res.status(200).json({ message: "Server is awake." });
+    // });
+
+    // const PORT = process.env.PORT || 5000;
+    // server.listen(PORT, () => {
+    //     console.log(`🚀 Backend server is running on port ${PORT}`);
+    // });
     
 // const express = require('express');
 // const mongoose = require('mongoose');

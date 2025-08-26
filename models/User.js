@@ -11,6 +11,8 @@ const UserSchema = new mongoose.Schema({
     bio: { type: String, required: true, maxLength: 150 },
     profilePic: { type: String, default: '' },
     pushSubscription: { type: Object }, // <-- ADD THIS LINE
+    connections: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], // <-- ADD THIS
+    connectionRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], // <-- ADD THIS
 }, { timestamps: true }); // timestamps adds 'createdAt' and 'updatedAt' fields
 
 module.exports = mongoose.model('User', UserSchema);
