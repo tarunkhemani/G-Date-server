@@ -49,6 +49,7 @@
     //new line
     const connectionRoute = require('./routes/connections'); // <-- ADD THIS
     const notificationRoute = require('./routes/notifications'); // <-- ADD THIS
+    const confessionRoute = require('./routes/confessions'); // <-- ADD THIS
 
     app.use('/api/auth', authRoute);
     app.use('/api/users', userRoute);
@@ -58,6 +59,7 @@
     //new line
     app.use('/api/connections', connectionRoute); // <-- ADD THIS
     app.use('/api/notifications', notificationRoute); // <-- ADD THIS
+    app.use('/api/confessions', confessionRoute); // <-- ADD THIS
 
     let onlineUsers = [];
     const addUser = (userId, socketId) => { !onlineUsers.some((user) => user.userId === userId) && onlineUsers.push({ userId, socketId }); };
